@@ -1,6 +1,30 @@
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+lerna-debug.log*
+.pnpm-debug.log*
+
+# Dependency directories
 node_modules/
+
+# Environment Variables
+# CRITICAL: This file contains secret API keys (Groq, Google Maps) and must never be committed.
 .env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# Optional npm cache directory
+.npm
+
+# System files
+.DS_Store
+Thumbs.db
 package-lock.json
 package.json
-public/
+node_modules/
 server.js

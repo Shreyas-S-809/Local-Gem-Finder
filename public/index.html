@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Local Gem Finder — Discover Hidden Spots Like a Local</title>
+  <meta name="description" content="Skip the tourist traps. Local Gem Finder uses AI to uncover the hidden gems that only locals know about." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Playfair+Display:wght@700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- Ambient Background -->
+  <div class="bg-orbs" aria-hidden="true">
+    <div class="orb orb-1"></div>
+    <div class="orb orb-2"></div>
+    <div class="orb orb-3"></div>
+  </div>
+
+  <!-- Top Navigation Bar -->
+  <nav class="top-bar" id="top-bar">
+    <a href="/" class="top-bar__logo">
+      <span class="top-bar__icon">💎</span>
+      <span class="top-bar__name">Local Gem Finder</span>
+    </a>
+    <div class="top-bar__actions">
+      <!-- Theme Toggle -->
+      <button class="top-bar__btn" id="theme-toggle" title="Toggle Light/Dark Mode">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+      </button>
+
+      <!-- Chatbot Button -->
+      <button class="top-bar__btn" id="chat-toggle" title="AI Trip Planner">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
+        <span>Plan Trip</span>
+      </button>
+
+      <button class="top-bar__btn" id="favorites-toggle" title="View Favorites">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/></svg>
+        <span class="fav-count" id="fav-count">0</span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- Main Split Layout -->
+  <main class="app-layout" id="app-layout">
+
+    <!-- ═══ LEFT PANEL ═══ -->
+    <div class="left-panel" id="left-panel">
+
+      <!-- Hero -->
+      <header class="hero" id="hero-section">
+        <h1 class="hero__title">Discover Hidden <span class="accent">Gems</span></h1>
+        <p class="hero__subtitle">
+          Skip the tourist traps. Uncover secret spots, authentic food joints &amp; offbeat
+          experiences that only locals know about.
+        </p>
+      </header>
+
+      <!-- Search -->
+      <section class="search-section" id="search-section">
+        <form class="search-form" id="gem-form" autocomplete="off">
+          <div class="search-input-wrapper">
+            <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.35-4.35"/></svg>
+            <input type="text" id="location-input" class="search-input" placeholder="Enter a city — e.g. Mysore, Kyoto…" required />
+          </div>
+          
+          <div class="search-filters">
+            <select id="budget-filter" class="search-select">
+              <option value="">Any Budget</option>
+              <option value="Free / Very Cheap">Backpacker (Cheap)</option>
+              <option value="Mid-range">Mid-range</option>
+              <option value="Luxury / Premium">Luxury</option>
+            </select>
+            <select id="vibe-filter" class="search-select">
+              <option value="">Any Vibe</option>
+              <option value="Relaxing, Peaceful">Relaxing</option>
+              <option value="Adventurous, Active">Adventure</option>
+              <option value="Romantic, Scenic">Romantic</option>
+              <option value="Local Food, Culinary">Foodie</option>
+              <option value="Historical, Cultural">Historical</option>
+            </select>
+          </div>
+
+          <button type="submit" id="find-btn" class="btn-find">
+            <span class="btn-find__text">Find Gems</span>
+            <svg class="btn-find__arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="M12 5l7 7-7 7"/></svg>
+          </button>
+        </form>
+
+        <!-- Quick Picks + Search History -->
+        <div class="quick-picks" id="quick-picks">
+          <span class="quick-picks__label">Try:</span>
+          <button type="button" class="pill" data-location="Mysore">Mysore</button>
+          <button type="button" class="pill" data-location="Kyoto">Kyoto</button>
+          <button type="button" class="pill" data-location="Lisbon">Lisbon</button>
+          <button type="button" class="pill" data-location="Marrakech">Marrakech</button>
+          <button type="button" class="pill" data-location="Oaxaca">Oaxaca</button>
+        </div>
+        <div class="search-history hidden" id="search-history">
+          <span class="quick-picks__label">R  ecent:</span>
+        </div>
+      </section>
+
+      <!-- Loading -->
+      <section class="loading-section hidden" id="loading-section">
+        <div class="loader"><div class="loader__dot"></div><div class="loader__dot"></div><div class="loader__dot"></div></div>
+        <p class="loading-text" id="loading-text">Scouting local spots…</p>
+      </section>
+
+      <!-- Results -->
+      <section class="results-section hidden" id="results-section">
+        <div class="results-header">
+          <h2 class="results-title" id="results-title">Hidden Gems</h2>
+          <button type="button" class="btn-new-search" id="new-search-btn">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M23 4v6h-6"/><path d="M1 20v-6h6"/><path d="M3.51 9a9 9 0 0114.85-3.36L23 10"/><path d="M20.49 15a9 9 0 01-14.85 3.36L1 14"/></svg>
+            New Search
+          </button>
+        </div>
+        <div class="results-content" id="results-content"></div>
+      </section>
+
+      <!-- Error -->
+      <section class="error-section hidden" id="error-section">
+        <div class="error-card">
+          <svg class="error-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+          <p class="error-message" id="error-message"></p>
+          <button type="button" class="btn-retry" id="retry-btn">Try Again</button>
+        </div>
+      </section>
+    </div>
+    
+    <!-- ═══ MIDDLE PANEL (Map) ═══ -->
+    <div class="right-panel" id="right-panel">
+      <button id="toggle-map-btn" class="map-toggle-btn">
+        🗺️ <span id="toggle-map-text">Collapse Map</span>
+      </button>
+      <div class="map-container" id="map-container">
+        <!-- The Google Map JS API will mount inside #map-canvas -->
+        <div id="map-canvas" class="map-canvas"></div>
+        <div class="map-placeholder" id="map-placeholder">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
+          <p>Search for a city to explore the interactive map</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══ RIGHT PANEL (Chat) ═══ -->
+    <div class="chat-panel hidden" id="chat-panel">
+      <div class="chat-header">
+        <div class="chat-header__title">
+          <span class="chat-header__icon">✨</span>
+          <div>
+            <h3>Local AI Guide</h3>
+            <p>Ask for trips & hidden gems</p>
+          </div>
+        </div>
+        <div style="display: flex; gap: 8px;">
+          <button class="chat-action-btn" id="export-calendar-btn" title="Export to Calendar" style="background: none; border: none; color: var(--text-secondary); cursor: pointer; font-size: 1.1rem;">📅</button>
+          <button class="chat-close" id="chat-close">✕</button>
+        </div>
+      </div>
+      <div class="chat-body" id="chat-body">
+        <div class="chat-msg chat-msg--ai">
+          <div class="chat-bubble">Hi there! 👋 Need a 1-day itinerary or local tips? Just ask!</div>
+        </div>
+      </div>
+      <form class="chat-footer" id="chat-form" autocomplete="off">
+        <input type="text" id="chat-input" class="chat-input" placeholder="Plan a trip..." required />
+        <button type="submit" class="chat-send" title="Send">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg>
+        </button>
+      </form>
+    </div>
+
+  </main>
+
+  <!-- Favorites Drawer -->
+  <div class="drawer-overlay hidden" id="drawer-overlay"></div>
+  <aside class="favorites-drawer hidden" id="favorites-drawer">
+    <div class="drawer-header">
+      <h2 class="drawer-title">❤️ Saved Gems</h2>
+      <button class="drawer-close" id="drawer-close" title="Close">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
+    </div>
+    <div class="drawer-body" id="drawer-body">
+      <p class="drawer-empty" id="drawer-empty">No saved gems yet. Click the heart on any gem card to save it!</p>
+    </div>
+  </aside>
+
+  <!-- Toast Container -->
+  <div class="toast-container" id="toast-container"></div>
+
+  <footer class="footer">
+    <p>Powered by <strong>Groq</strong>, <strong>Llama 3.3</strong>, &amp; <strong>Google Maps</strong></p>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
