@@ -134,7 +134,7 @@
           title: gem.name,
           label: (index + 1).toString(),
         });
-        mapMarkers.push(marker);
+        mapMarkers[index] = marker; // Assign by exact index due to async completion
         if (index === 0) {
           mapInstance.setCenter(results[0].geometry.location);
           mapInstance.setZoom(13);
